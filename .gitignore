@@ -1,7 +1,0 @@
-token.json
-test_user.json
-meeting_details.json
-target.json
-venv/
-.env
-**/__pycache__
