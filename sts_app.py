@@ -3,20 +3,15 @@ import json
 import requests
 from dotenv import load_dotenv
 
-from utils import get_token
+from utils.get_token import token
 
 load_dotenv()
 
 ACCOUNT_ID = os.environ.get('ACCOUNT_ID')
 
-#Load in the most recent token saved in token.json
-with open('token.json', 'r') as openfile:
-    current_token = json.load(openfile)
-
 #Check token expiration. If expired, get a new token and save as access_token
-access_token = get_token.token(current_token)
+access_token = token()
 #print(access_token)
-
 base_url = 'https://api.zoom.us/v2'
 
 # EXAMPLE OF HOW TO CREATE A MEETING ON BEHALF OF A USER
@@ -39,6 +34,8 @@ def list_users(access_token):
     return r_content
 
 
+
+# Load Test User 
 with open('test_user.json', 'r') as openfile:
     target_user = json.load(openfile)
 
@@ -72,9 +69,12 @@ def create_meeting(access_token, user_id):
     }
     response = requests.post(url=full_url, headers=headers, json=payload)
     r_content = json.loads(response.content)
-    with open('meeting_details.json', 'w') as outfile:
-        json.dump(r_content, outfile, indent=4)
-
+    if response.status_code == 201:
+        print(f'Status Code: {response.status_code}. Meeting Created!')
+        with open('meeting_details.json', 'w') as outfile:
+            json.dump(r_content, outfile, indent=4)
+    else: 
+        print(f'ERROR: Status Code: {response.status_code}')
     
 
 
