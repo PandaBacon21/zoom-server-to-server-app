@@ -21,7 +21,6 @@ message = f'{CLIENT_ID}:{CLIENT_SECRET}'
 encoded = base64.b64encode(message.encode()).decode()
 
 def get_new_token():
-    # new_access_token = {}
     con = sqlite3.connect('/Users/josh/Desktop/coding/new_zoom_testing/zoom_sts_oauth_app/database/sts_app.db')
     cur = con.cursor()
 
@@ -73,15 +72,6 @@ def token():
         return access_token
     else: 
         return access_token
-
-
-
-    #valid_token = check_token_valid(access_token)
-
-    #change this to log rather than print once logging has been added
-    #print(f'This Is The Valid Access Token: {valid_token}')
-    
-    #return valid_token['access_token']
 
 #get_token()
 #token()

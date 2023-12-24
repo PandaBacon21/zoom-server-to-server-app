@@ -14,8 +14,6 @@ access_token = token()
 #print(access_token)
 base_url = 'https://api.zoom.us/v2'
 
-# EXAMPLE OF HOW TO CREATE A MEETING ON BEHALF OF A USER
-
 # GET A LIST OF ALL USERS - CAN THEN PARSE OUT DETAILS FROM THERE
 def list_users(access_token):
     endpoint = '/users'
@@ -54,7 +52,8 @@ def get_user_id(access_token, target_user):
         json.dump(r_content, outfile, indent=4)
 
     return r_content['id']
-    
+
+# EXAMPLE OF HOW TO CREATE A MEETING ON BEHALF OF A USER
 
 def create_meeting(access_token, user_id):
     endpoint = f'/users/{user_id}/meetings'
