@@ -13,6 +13,7 @@ load_dotenv()
 ACCOUNT_ID = os.environ.get('ACCOUNT_ID')
 CLIENT_ID = os.environ.get('CLIENT_ID')
 CLIENT_SECRET = os.environ.get('CLIENT_SECRET')
+DB_LOCATION = os.environ.get('DB_LOCATION')
 
 BASE_URL = 'https://api.zoom.us/v2/'
 AUTH_URL = 'https://zoom.us/oauth/token'
@@ -21,7 +22,7 @@ message = f'{CLIENT_ID}:{CLIENT_SECRET}'
 encoded = base64.b64encode(message.encode()).decode()
 
 def get_new_token():
-    con = sqlite3.connect('/Users/josh/Desktop/coding/new_zoom_testing/zoom_sts_oauth_app/database/sts_app.db')
+    con = sqlite3.connect(f'{DB_LOCATION}')
     cur = con.cursor()
 
     headers = {
