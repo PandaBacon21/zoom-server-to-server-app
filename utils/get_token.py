@@ -35,31 +35,26 @@ def get_new_token():
 
     access_token = r_content['access_token']
     token_exp = datetime.now() + timedelta(seconds=r_content['expires_in'])
-    #Update this to log rather than print once logging has been added
 
-    # USE A TRY/EXCEPT BLOCK ONCE LOGGING IS ADDED
     cur.execute(
         'INSERT OR REPLACE INTO tokens(uuid, token, expire) VALUES (?,?,?)', (1, access_token, token_exp.strftime('%Y-%m-%d %H:%M:%S')) 
     )
     con.commit()
-
     cur.close()
     return access_token, token_exp.strftime('%Y-%m-%d %H:%M:%S')
 
 def check_token_valid(token_exp):
     current_datetime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     if (token_exp < current_datetime):
-        #change this to log rather than print once logging has been added
         print('Token Is Expired. Retrieving New Token')
         return False
     else:
-        #change this to log rather than print once logging has been added
         print('Access Token Is Valid')
         return True
             
 def token():
     connect_db()
-    con = sqlite3.connect('/Users/josh/Desktop/coding/new_zoom_testing/zoom_sts_oauth_app/database/sts_app.db')
+    con = sqlite3.connect(f'{DB_LOCATION}')
     cur = con.cursor()
     try: 
         data = cur.execute('SELECT token, expire FROM tokens WHERE uuid = 1').fetchone()
@@ -73,6 +68,3 @@ def token():
         return access_token
     else: 
         return access_token
-
-#get_token()
-#token()

@@ -1,8 +1,13 @@
+import os
+from dotenv import load_dotenv
 import sqlite3
 
-#specify your database path. Using SQLite so I just created a new database folder that my SQLite database file will live 
+load_dotenv()
+
+DB_LOCATION = os.environ.get('DB_LOCATION')
+
 def connect_db():
-    con = sqlite3.connect('/Users/josh/Desktop/coding/new_zoom_testing/zoom_sts_oauth_app/database/sts_app.db')
+    con = sqlite3.connect(f'{DB_LOCATION}')
     cur = con.cursor()
     # create the tokens table
     cur.execute(
@@ -13,5 +18,3 @@ def connect_db():
     else: 
         print('Tokens Table Does NOT Exist. Creating Table')
         cur.execute('CREATE TABLE tokens(uuid INTEGER UNIQUE, token TEXT, expire TEXT)')
-    
-    # "../database/sts_app.db"
